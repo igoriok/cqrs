@@ -13,8 +13,7 @@
     <tags>messaging sqrs autofac</tags>
 	<dependencies>
 		<dependency id="Autofac" version="3.5.2" />
-		<dependency id="Messaging" version="0.1" />
-		<dependency id="Messaging.Core" version="0.1" />
+		<dependency id="Irdaf.Messaging" version="0.1" />
 	</dependencies>
   </metadata>
 </package>

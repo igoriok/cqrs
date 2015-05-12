@@ -35,23 +35,27 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Decorators\MessageServiceDecorator.cs" />
-    <Compile Include="Decorators\MessageServiceDecoratorAsync.cs" />
-    <Compile Include="Extensions\SubscriptionExtensions.cs" />
+    <Compile Include="Behaviors\IServiceBehavior.cs" />
+    <Compile Include="Behaviors\IServiceBehaviorAsync.cs" />
+    <Compile Include="Behaviors\UnitOfWorkServiceBehaviorAsync.cs" />
+    <Compile Include="Behaviors\UnitOfWorkServiceBehavior.cs" />
+    <Compile Include="Builders\DefaultBuilder.cs" />
+    <Compile Include="Builders\IMessageBuilder.cs" />
+    <Compile Include="Builders\IMessageHandlerBuilder.cs" />
+    <Compile Include="Dispatch\DefaultMessageDispatcher.cs" />
+    <Compile Include="Dispatch\IMessageDispatcher.cs" />
+    <Compile Include="Dispatch\TaskMessageDispatcher.cs" />
+    <Compile Include="Dispatch\SingleThreadMessageDispatcher.cs" />
+    <Compile Include="Extensions\RegistrationExtensions.cs" />
+    <Compile Include="Dispatch\IMessageContext.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
+    <Compile Include="Helpers\HandlerTypeHelper.cs" />
+    <Compile Include="Dispatch\MessageHandlerAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\Common\MessageHandlerProviderAsync.cs" />
-    <Compile Include="Providers\Common\MessageHandlerProvider.cs" />
-    <Compile Include="Providers\ICommandHandlerProvider.cs" />
-    <Compile Include="Providers\ICommandHandlerProviderAsync.cs" />
-    <Compile Include="Providers\IEventHandlerProvider.cs" />
-    <Compile Include="Providers\IEventHandlerProviderAsync.cs" />
-    <Compile Include="Providers\IMessageHandlerProvider.cs" />
-    <Compile Include="Providers\IMessageHandlerProviderAsync.cs" />
-    <Compile Include="Providers\IQueryHandlerProvider.cs" />
-    <Compile Include="Providers\IQueryHandlerProviderAsync.cs" />
+    <Compile Include="Providers\IHandlerRegistration.cs" />
+    <Compile Include="Providers\IMessageHandlerRegistry.cs" />
+    <Compile Include="Providers\DefaultMessageHandlerRegistry.cs" />
     <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\MessageServiceAsync.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
     <Compile Include="UoW\IUnitOfWorkAsync.cs" />
     <Compile Include="UoW\IUnitOfWorkFactory.cs" />
@@ -63,6 +67,7 @@
       <Name>Irdaf.Messaging.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

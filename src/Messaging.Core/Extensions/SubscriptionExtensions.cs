@@ -12,17 +12,17 @@ namespace Irdaf.Messaging
     {
         public static IDisposable Subscribe<TEvent>(this ISubscriptionService service, Action<TEvent> handler) where TEvent : IEvent
         {
-            return service.Subscribe(handler.Create());
+            return service.Subscribe(handler.CreateEventHandler());
         }
 
         public static Task<IDisposable> SubscribeAsync<TEvent>(this ISubscriptionServiceAsync service, Action<TEvent> handler) where TEvent : IEvent
         {
-            return service.SubscribeAsync(handler.CreateAsync(), CancellationToken.None);
+            return service.SubscribeAsync(handler.CreateEventHandlerAsync(), CancellationToken.None);
         }
 
         public static Task<IDisposable> SubscribeAsync<TEvent>(this ISubscriptionServiceAsync service, Func<TEvent, CancellationToken, Task> handler) where TEvent : IEvent
         {
-            return service.SubscribeAsync(handler.CreateAsync(), CancellationToken.None);
+            return service.SubscribeAsync(handler.CreateEventHandlerAsync(), CancellationToken.None);
         }
 
         public static IEventHandler<TEvent> ToEventHandler<TEvent>(this IEnumerable<IEventHandler<TEvent>> handlers) where TEvent : IEvent

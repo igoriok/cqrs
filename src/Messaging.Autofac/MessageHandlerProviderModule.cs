@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Irdaf.Messaging.Providers;
+using Irdaf.Messaging.Builders;
 
 namespace Irdaf.Messaging
 {
@@ -7,7 +7,7 @@ namespace Irdaf.Messaging
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AutofacMessageHandlerProvider>().AsImplementedInterfaces();
+            builder.RegisterType<AutofacMessageHandlerBuilder>().AsImplementedInterfaces();
         }
     }
 }

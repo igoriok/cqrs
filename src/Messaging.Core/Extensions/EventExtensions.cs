@@ -8,19 +8,19 @@ namespace Irdaf.Messaging
 {
     public static class EventExtensions
     {
-        public static IEventHandler<TEvent> Create<TEvent>(this Action<TEvent> handler) where TEvent : IEvent
+        public static IEventHandler<TEvent> CreateEventHandler<TEvent>(this Action<TEvent> handler) where TEvent : IEvent
         {
             return new ActionEventHandler<TEvent>(handler);
         }
 
-        public static IEventHandlerAsync<TEvent> CreateAsync<TEvent>(this Func<TEvent, CancellationToken, Task> handler) where TEvent : IEvent
+        public static IEventHandlerAsync<TEvent> CreateEventHandlerAsync<TEvent>(this Func<TEvent, CancellationToken, Task> handler) where TEvent : IEvent
         {
             return new ActionEventHandlerAsync<TEvent>(handler);
         }
 
-        public static IEventHandlerAsync<TEvent> CreateAsync<TEvent>(this Action<TEvent> handler) where TEvent : IEvent
+        public static IEventHandlerAsync<TEvent> CreateEventHandlerAsync<TEvent>(this Action<TEvent> handler) where TEvent : IEvent
         {
-            return CreateAsync<TEvent>((e, t) => Task.Run(() => handler(e), t));
+            return CreateEventHandlerAsync<TEvent>((e, t) => Task.Run(() => handler(e), t));
         }
 
         public static Task PublishAsync(this IEventServiceAsync service, IEvent @event)

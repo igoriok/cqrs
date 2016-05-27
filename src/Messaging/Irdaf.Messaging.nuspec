@@ -12,7 +12,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>messaging cqrs</tags>
 	<dependencies>
-		<dependency id="Irdaf.Messaging.Core" version="0.1.0" />
+		<dependency id="Irdaf.Messaging.Core" version="0.1.2" />
 	</dependencies>
   </metadata>
 </package>

@@ -35,9 +35,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\IMessageContext.cs" />
+    <Compile Include="Context\MessageContext.cs" />
     <Compile Include="Extensions\CommandExtensions.cs" />
     <Compile Include="Extensions\EventExtensions.cs" />
-    <Compile Include="Extensions\SubscriptionExtensions.cs" />
+    <Compile Include="Extensions\MessageContextExtensions.cs" />
     <Compile Include="Handlers\ICommandHandler.cs" />
     <Compile Include="Handlers\ICommandHandlerAsync.cs" />
     <Compile Include="Handlers\IEventHandler.cs" />
@@ -57,8 +59,6 @@
     <Compile Include="Services\IMessageServiceAsync.cs" />
     <Compile Include="Services\IQueryService.cs" />
     <Compile Include="Services\IQueryServiceAsync.cs" />
-    <Compile Include="Services\ISubscriptionServiceAsync.cs" />
-    <Compile Include="Services\ISubscriptionService.cs" />
     <Compile Include="Extensions\QueryExtensions.cs" />
   </ItemGroup>
   <ItemGroup />

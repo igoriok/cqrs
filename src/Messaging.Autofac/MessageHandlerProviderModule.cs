@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Features.Variance;
 using Irdaf.Messaging.Builders;
 
 namespace Irdaf.Messaging
@@ -7,7 +8,8 @@ namespace Irdaf.Messaging
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AutofacMessageHandlerBuilder>().AsImplementedInterfaces();
+            builder.RegisterSource(new ContravariantRegistrationSource());
+            builder.RegisterType<AutofacContainer>().AsImplementedInterfaces();
         }
     }
 }

@@ -1,69 +1,87 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Irdaf.Messaging.Handlers;
 using Irdaf.Messaging.Services;
-using Rebus;
-using Rebus.Shared;
+using Rebus.Bus;
+using Rebus.Handlers;
+using Rebus.Messages;
 
 namespace Irdaf.Messaging.Rebus
 {
-    public class RebusService : IMessageService, IHandleMessages<object>
+    public class RebusService : IHandleMessages<object>, IMessageService, IMessageServiceAsync
     {
-        private readonly ConcurrentDictionary<object, TaskCompletionSource<object>> _queries
-            = new ConcurrentDictionary<object, TaskCompletionSource<object>>();
+        private readonly ConcurrentDictionary<object, TaskCompletionSource<object>> _tasks =
+            new ConcurrentDictionary<object, TaskCompletionSource<object>>();
 
         private readonly IBus _bus;
-        private readonly IMessageService _service;
 
-        public RebusService(IBus bus, IMessageService service)
+        public RebusService(IBus bus)
         {
             _bus = bus;
-            _service = service;
         }
 
         public TResult Query<TResult>(IQuery<TResult> query)
         {
-            var task = new TaskCompletionSource<object>();
-            var correlationId = Guid.NewGuid().ToString();
+            return SendAndWait<TResult>(query).Result;
+        }
 
-            _queries.TryAdd(correlationId, task);
-
-            _bus.AttachHeader(query, Headers.CorrelationId, correlationId);
-            _bus.Send(query);
-
-            return (TResult)task.Task.Result;
+        public async Task<TResult> QueryAsync<TResult>(IQuery<TResult> query, CancellationToken token)
+        {
+            return await SendAndWait<TResult>(query);
         }
 
         public void Execute(ICommand command)
         {
-            _bus.Send(command);
+            SendAndWait<object>(command).Wait();
+        }
+
+        public async Task ExecuteAsync(ICommand command, CancellationToken token)
+        {
+            await SendAndWait<object>(command);
         }
 
         public void Publish(IEvent @event)
         {
-            _bus.Send(@event);
+            _bus.Send(@event).Wait();
         }
 
-        public void Handle(object message)
+        public async Task PublishAsync(IEvent @event, CancellationToken token)
         {
-            var context = MessageContext.GetCurrent();
-            if (context == null)
-                return;
+            await _bus.Send(@event);
+        }
 
-            var correlationId = context.Headers[Headers.CorrelationId];
+        async Task IHandleMessages<object>.Handle(object message)
+        {
+            var context = global::Rebus.Pipeline.MessageContext.Current;
+
+            var correlationId = context.Message.Headers[Headers.CorrelationId];
 
             TaskCompletionSource<object> task;
 
-            if (_queries.TryRemove(correlationId, out task))
+            if (_tasks.TryRemove(correlationId, out task))
             {
                 task.SetResult(message);
             }
+
+            await Task.Yield();
         }
 
-        public IDisposable Subscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : IEvent
+        private async Task<TResult> SendAndWait<TResult>(IMessage message)
         {
-            return _service.Subscribe(handler);
+            var task = new TaskCompletionSource<object>();
+            var correlationId = Guid.NewGuid().ToString();
+
+            _tasks.TryAdd(correlationId, task);
+
+            await _bus
+                .Send(message, new Dictionary<string, string>
+                {
+                    { Headers.CorrelationId, correlationId }
+                });
+
+            return (TResult)task.Task.Result;
         }
     }
 }

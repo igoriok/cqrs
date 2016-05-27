@@ -11,6 +11,8 @@
     <AssemblyName>Irdaf.Messaging.Rebus</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,27 +33,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Rebus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Rebus.0.83.0\lib\NET45\Rebus.dll</HintPath>
+      <HintPath>..\packages\Rebus.0.97.0\lib\NET45\Rebus.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RebusHandler.cs" />
-    <Compile Include="RebusHandlerAsync.cs" />
-    <Compile Include="RebusServiceAsync.cs" />
     <Compile Include="RebusService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Messaging.Core\Irdaf.Messaging.Core.csproj">
       <Project>{0bc41c4d-148c-4cbb-9d5b-51228d20342a}</Project>
       <Name>Irdaf.Messaging.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Messaging\Irdaf.Messaging.csproj">
-      <Project>{14a7e1e9-df3e-4a8d-b5ae-0adffa1260b1}</Project>
-      <Name>Irdaf.Messaging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

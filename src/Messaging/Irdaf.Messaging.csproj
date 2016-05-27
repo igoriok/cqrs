@@ -30,36 +30,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\IServiceBehavior.cs" />
-    <Compile Include="Behaviors\IServiceBehaviorAsync.cs" />
-    <Compile Include="Behaviors\UnitOfWorkServiceBehaviorAsync.cs" />
-    <Compile Include="Behaviors\UnitOfWorkServiceBehavior.cs" />
-    <Compile Include="Builders\DefaultBuilder.cs" />
-    <Compile Include="Builders\IMessageBuilder.cs" />
-    <Compile Include="Builders\IMessageHandlerBuilder.cs" />
-    <Compile Include="Dispatch\DefaultMessageDispatcher.cs" />
-    <Compile Include="Dispatch\IMessageDispatcher.cs" />
-    <Compile Include="Dispatch\TaskMessageDispatcher.cs" />
-    <Compile Include="Dispatch\SingleThreadMessageDispatcher.cs" />
-    <Compile Include="Extensions\RegistrationExtensions.cs" />
-    <Compile Include="Dispatch\IMessageContext.cs" />
-    <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
+    <Compile Include="Container\DefaultContainer.cs" />
+    <Compile Include="Container\IContainer.cs" />
+    <Compile Include="Dispatch\DefaultDispatcher.cs" />
+    <Compile Include="Dispatch\Executors\CommandExecutor.cs" />
+    <Compile Include="Dispatch\Executors\EventExecutor.cs" />
+    <Compile Include="Dispatch\Executors\IExecutor.cs" />
+    <Compile Include="Dispatch\Executors\QueryExecutor.cs" />
+    <Compile Include="Dispatch\IDispatcher.cs" />
+    <Compile Include="Dispatch\Stages\ContainerStage.cs" />
+    <Compile Include="Dispatch\Stages\InvokeHandlerStage.cs" />
+    <Compile Include="Dispatch\Stages\UnitOfWorkStage.cs" />
     <Compile Include="Helpers\HandlerTypeHelper.cs" />
-    <Compile Include="Dispatch\MessageHandlerAttribute.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Dispatch\Stages\IStage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\IHandlerRegistration.cs" />
-    <Compile Include="Providers\IMessageHandlerRegistry.cs" />
-    <Compile Include="Providers\DefaultMessageHandlerRegistry.cs" />
+    <Compile Include="Providers\IHandlerSource.cs" />
+    <Compile Include="Providers\IHandlerRegistry.cs" />
+    <Compile Include="Providers\DefaultHandlerRegistry.cs" />
+    <Compile Include="Dispatch\Context\CommandContext.cs" />
+    <Compile Include="Dispatch\Context\EventContext.cs" />
     <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Dispatch\Context\QueryContext.cs" />
     <Compile Include="UoW\IUnitOfWork.cs" />
-    <Compile Include="UoW\IUnitOfWorkAsync.cs" />
     <Compile Include="UoW\IUnitOfWorkFactory.cs" />
-    <Compile Include="UoW\IUnitOfWorkFactoryAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Messaging.Core\Irdaf.Messaging.Core.csproj">

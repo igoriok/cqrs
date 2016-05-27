@@ -11,6 +11,8 @@
     <AssemblyName>Irdaf.Messaging.Autofac</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,10 +40,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\AutofacMessageHandlerBuilder.cs" />
+    <Compile Include="Builders\AutofacContainer.cs" />
     <Compile Include="MessageHandlerProviderModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\AutofacMessageHandlerRegistry.cs" />
+    <Compile Include="Providers\AutofacSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Messaging.Core\Irdaf.Messaging.Core.csproj">

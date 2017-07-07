@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Messaging framework</Description>
+    <Copyright>Copyright © igoriok 2015</Copyright>
+    <AssemblyTitle>Irdaf.Messaging</AssemblyTitle>
+    <Authors>igoriok</Authors>
+    <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
+    <AssemblyName>Irdaf.Messaging</AssemblyName>
+    <RootNamespace>Irdaf.Messaging</RootNamespace>
+    <PackageId>Irdaf.Messaging</PackageId>
+    <PackageTags>messaging;cqrs</PackageTags>
+    <PackageProjectUrl>https://github.com/igoriok/cqrs</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
+    <Version>0.1.5</Version>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Irdaf.Messaging.Core\Irdaf.Messaging.Core.csproj" />
+  </ItemGroup>
+
+</Project>

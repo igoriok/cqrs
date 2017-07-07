@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Messaging framework Rebus integration</Description>
+    <Copyright>Copyright igoriok© 2015</Copyright>
+    <AssemblyTitle>Irdaf.Messaging.Rebus</AssemblyTitle>
+    <Authors>igoriok</Authors>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>Irdaf.Messaging.Rebus</AssemblyName>
+    <PackageId>Irdaf.Messaging.Rebus</PackageId>
+    <PackageTags>messaging;cqrs;rebus</PackageTags>
+    <PackageProjectUrl>https://github.com/igoriok/cqrs</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
+    <RootNamespace>Irdaf.Messaging</RootNamespace>
+    <Version>0.1.5</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Irdaf.Messaging.Core\Irdaf.Messaging.Core.csproj" />
+    <ProjectReference Include="..\Irdaf.Messaging\Irdaf.Messaging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rebus" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>

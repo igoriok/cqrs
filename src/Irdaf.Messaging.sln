@@ -1,15 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irdaf.Messaging.Autofac", "Messaging.Autofac\Irdaf.Messaging.Autofac.csproj", "{776C5C15-0AD8-414F-9F26-89838A4B622C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4D30B61E-8462-4061-9235-BDB6F616656A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irdaf.Messaging.Core", "Messaging.Core\Irdaf.Messaging.Core.csproj", "{0BC41C4D-148C-4CBB-9D5B-51228D20342A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A4F1C33-A4A8-49FE-A80B-2E4896065B37}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irdaf.Messaging.Rebus", "Messaging.Rebus\Irdaf.Messaging.Rebus.csproj", "{74638A4D-4F0A-4957-BB45-DA2213DAEB0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irdaf.Messaging", "Irdaf.Messaging\Irdaf.Messaging.csproj", "{8B02B51A-234B-413D-A5F7-CC80A6A93582}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irdaf.Messaging", "Messaging\Irdaf.Messaging.csproj", "{14A7E1E9-DF3E-4A8D-B5AE-0ADFFA1260B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irdaf.Messaging.Core", "Irdaf.Messaging.Core\Irdaf.Messaging.Core.csproj", "{60915CDC-EF45-470D-AF97-1C0D2EE89D5C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irdaf.Messaging.Validation", "Irdaf.Messaging.Validation\Irdaf.Messaging.Validation.csproj", "{4B8305DC-D085-4F6A-B80D-452784B15729}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irdaf.Messaging.Autofac", "Irdaf.Messaging.Autofac\Irdaf.Messaging.Autofac.csproj", "{4202214D-890D-4998-B4AD-E9080048606C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Irdaf.Messaging.Rebus", "Irdaf.Messaging.Rebus\Irdaf.Messaging.Rebus.csproj", "{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,24 +27,35 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{776C5C15-0AD8-414F-9F26-89838A4B622C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{776C5C15-0AD8-414F-9F26-89838A4B622C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{776C5C15-0AD8-414F-9F26-89838A4B622C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{776C5C15-0AD8-414F-9F26-89838A4B622C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0BC41C4D-148C-4CBB-9D5B-51228D20342A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BC41C4D-148C-4CBB-9D5B-51228D20342A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BC41C4D-148C-4CBB-9D5B-51228D20342A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BC41C4D-148C-4CBB-9D5B-51228D20342A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74638A4D-4F0A-4957-BB45-DA2213DAEB0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74638A4D-4F0A-4957-BB45-DA2213DAEB0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74638A4D-4F0A-4957-BB45-DA2213DAEB0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74638A4D-4F0A-4957-BB45-DA2213DAEB0F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14A7E1E9-DF3E-4A8D-B5AE-0ADFFA1260B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14A7E1E9-DF3E-4A8D-B5AE-0ADFFA1260B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14A7E1E9-DF3E-4A8D-B5AE-0ADFFA1260B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14A7E1E9-DF3E-4A8D-B5AE-0ADFFA1260B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B02B51A-234B-413D-A5F7-CC80A6A93582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B02B51A-234B-413D-A5F7-CC80A6A93582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B02B51A-234B-413D-A5F7-CC80A6A93582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B02B51A-234B-413D-A5F7-CC80A6A93582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60915CDC-EF45-470D-AF97-1C0D2EE89D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60915CDC-EF45-470D-AF97-1C0D2EE89D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60915CDC-EF45-470D-AF97-1C0D2EE89D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60915CDC-EF45-470D-AF97-1C0D2EE89D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B8305DC-D085-4F6A-B80D-452784B15729}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B8305DC-D085-4F6A-B80D-452784B15729}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B8305DC-D085-4F6A-B80D-452784B15729}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B8305DC-D085-4F6A-B80D-452784B15729}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4202214D-890D-4998-B4AD-E9080048606C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4202214D-890D-4998-B4AD-E9080048606C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4202214D-890D-4998-B4AD-E9080048606C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4202214D-890D-4998-B4AD-E9080048606C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B02B51A-234B-413D-A5F7-CC80A6A93582} = {4D30B61E-8462-4061-9235-BDB6F616656A}
+		{60915CDC-EF45-470D-AF97-1C0D2EE89D5C} = {4D30B61E-8462-4061-9235-BDB6F616656A}
+		{4B8305DC-D085-4F6A-B80D-452784B15729} = {4D30B61E-8462-4061-9235-BDB6F616656A}
+		{4202214D-890D-4998-B4AD-E9080048606C} = {4D30B61E-8462-4061-9235-BDB6F616656A}
+		{5A7463B8-1725-44A0-A0EA-E4E01FECDDBC} = {4D30B61E-8462-4061-9235-BDB6F616656A}
 	EndGlobalSection
 EndGlobal

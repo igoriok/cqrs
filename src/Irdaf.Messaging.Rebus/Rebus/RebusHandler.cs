@@ -15,14 +15,20 @@ namespace Irdaf.Messaging.Rebus
             _messageService = messageService;
         }
 
-        public Task Handle(ICommand message)
+        public async Task Handle(ICommand message)
         {
-            return _messageService.ExecuteAsync(message);
+            using (RebusContext.Assing(global::Rebus.Pipeline.MessageContext.Current))
+            {
+                await _messageService.ExecuteAsync(message).ConfigureAwait(false);
+            }
         }
 
-        public Task Handle(IEvent message)
+        public async Task Handle(IEvent message)
         {
-            return _messageService.PublishAsync(message);
+            using (RebusContext.Assing(global::Rebus.Pipeline.MessageContext.Current))
+            {
+                await _messageService.PublishAsync(message).ConfigureAwait(false);
+            }
         }
     }
 }

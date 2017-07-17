@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Irdaf.Messaging.Handlers;
 
 namespace Irdaf.Messaging.Adapters
@@ -7,9 +9,9 @@ namespace Irdaf.Messaging.Adapters
     {
         private readonly IEnumerable<IEventHandler<TEvent>> _handlers;
 
-        public EventHandlerAdapter(IEnumerable<IEventHandler<TEvent>> handlers)
+        public EventHandlerAdapter(IEnumerable handlers)
         {
-            _handlers = handlers;
+            _handlers = handlers.OfType<IEventHandler<TEvent>>().ToList();
         }
 
         public void Handle(IEvent @event, IMessageContext context)

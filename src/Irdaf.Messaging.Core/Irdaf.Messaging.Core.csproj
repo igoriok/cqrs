@@ -4,7 +4,7 @@
     <Description>Messaging framework core classes</Description>
     <Copyright>Copyright igoriok© 2015</Copyright>
     <AssemblyTitle>Irdaf.Messaging.Core</AssemblyTitle>
-    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net46</TargetFrameworks>
     <AssemblyName>Irdaf.Messaging.Core</AssemblyName>
     <RootNamespace>Irdaf.Messaging</RootNamespace>
     <PackageId>Irdaf.Messaging.Core</PackageId>
@@ -12,12 +12,8 @@
     <PackageProjectUrl>https://github.com/igoriok/cqrs</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
-    <Version>0.1.5</Version>
+    <Version>1.0.1</Version>
     <Authors>igoriok</Authors>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 
 </Project>

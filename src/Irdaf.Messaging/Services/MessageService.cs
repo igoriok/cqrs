@@ -17,6 +17,8 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new QueryContext<TResult>(query))
             {
+                AttachServices(context);
+
                 _pipeline.Execute(context);
 
                 return context.Result;
@@ -27,6 +29,8 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new QueryContext<TResult>(query))
             {
+                AttachServices(context, cancellationToken);
+
                 await _pipeline.ExecuteAsync(context, cancellationToken);
 
                 return context.Result;
@@ -37,6 +41,8 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new CommandContext(command))
             {
+                AttachServices(context);
+
                 _pipeline.Execute(context);
             }
         }
@@ -45,6 +51,8 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new CommandContext(command))
             {
+                AttachServices(context, cancellationToken);
+
                 await _pipeline.ExecuteAsync(context, cancellationToken);
             }
         }
@@ -53,6 +61,8 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new EventContext(@event))
             {
+                AttachServices(context);
+
                 _pipeline.Execute(context);
             }
         }
@@ -61,8 +71,24 @@ namespace Irdaf.Messaging.Services
         {
             using (var context = new EventContext(@event))
             {
+                AttachServices(context, cancellationToken);
+
                 await _pipeline.ExecuteAsync(context, cancellationToken);
             }
+        }
+
+        private void AttachServices(IPipelineContext context, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            context.Set(_pipeline);
+            context.Set(cancellationToken);
+            context.Set<IQueryService>(this);
+            context.Set<IQueryServiceAsync>(this);
+            context.Set<ICommandService>(this);
+            context.Set<ICommandServiceAsync>(this);
+            context.Set<IEventService>(this);
+            context.Set<IEventServiceAsync>(this);
+            context.Set<IMessageService>(this);
+            context.Set<IMessageServiceAsync>(this);
         }
     }
 }

@@ -8,16 +8,16 @@ namespace Irdaf.Messaging.Pipeline
 {
     public class DefaultPipeline : IPipeline
     {
-        private readonly IEnumerable<Func<IPipelineContext, IStage>> _pipeline;
+        private readonly IEnumerable<Func<IPipelineContext, object>> _pipeline;
 
-        public DefaultPipeline(IEnumerable<Func<IPipelineContext, IStage>> pipeline)
+        public DefaultPipeline(IEnumerable<Func<IPipelineContext, object>> pipeline)
         {
             _pipeline = pipeline;
         }
 
         public void Execute(IPipelineContext context)
         {
-            using (var dispatcher = new Dispatcher(_pipeline, context, CancellationToken.None))
+            using (var dispatcher = new Dispatcher(_pipeline, context))
             {
                 dispatcher.Dispatch();
             }
@@ -25,7 +25,7 @@ namespace Irdaf.Messaging.Pipeline
 
         public Task ExecuteAsync(IPipelineContext context, CancellationToken cancellationToken)
         {
-            using (var dispatcher = new Dispatcher(_pipeline, context, cancellationToken))
+            using (var dispatcher = new DispatcherAsync(_pipeline, context, cancellationToken))
             {
                 return dispatcher.DispatchAsync();
             }
@@ -34,13 +34,11 @@ namespace Irdaf.Messaging.Pipeline
         private class Dispatcher : IDisposable
         {
             private readonly IPipelineContext _context;
-            private readonly CancellationToken _cancellationToken;
-            private readonly IEnumerator<Func<IPipelineContext, IStage>> _enumerator;
+            private readonly IEnumerator<Func<IPipelineContext, object>> _enumerator;
 
-            public Dispatcher(IEnumerable<Func<IPipelineContext, IStage>> pipeline, IPipelineContext context, CancellationToken cancellationToken)
+            public Dispatcher(IEnumerable<Func<IPipelineContext, object>> pipeline, IPipelineContext context)
             {
                 _context = context;
-                _cancellationToken = cancellationToken;
                 _enumerator = pipeline.GetEnumerator();
             }
 
@@ -53,14 +51,40 @@ namespace Irdaf.Messaging.Pipeline
                     {
                         try
                         {
-                            stage.Execute(_context, Dispatch);
+                            if (stage is IStage syncStage)
+                            {
+                                syncStage.Execute(_context, Dispatch);
+                            }
+                            else if (stage is IStageAsync asyncStage)
+                            {
+                                asyncStage.ExecuteAsync(_context, () => { Dispatch(); return Task.CompletedTask; }, CancellationToken.None).GetAwaiter().GetResult();
+                            }
                         }
-                        finally 
+                        finally
                         {
                             (stage as IDisposable)?.Dispose();
                         }
                     }
                 }
+            }
+
+            public void Dispose()
+            {
+                _enumerator.Dispose();
+            }
+        }
+
+        private class DispatcherAsync : IDisposable
+        {
+            private readonly IPipelineContext _context;
+            private readonly CancellationToken _cancellationToken;
+            private readonly IEnumerator<Func<IPipelineContext, object>> _enumerator;
+
+            public DispatcherAsync(IEnumerable<Func<IPipelineContext, object>> pipeline, IPipelineContext context, CancellationToken cancellationToken)
+            {
+                _context = context;
+                _cancellationToken = cancellationToken;
+                _enumerator = pipeline.GetEnumerator();
             }
 
             public async Task DispatchAsync()
@@ -74,7 +98,14 @@ namespace Irdaf.Messaging.Pipeline
                     {
                         try
                         {
-                            await stage.ExecuteAsync(_context, DispatchAsync, _cancellationToken);
+                            if (stage is IStageAsync asyncStage)
+                            {
+                                await asyncStage.ExecuteAsync(_context, DispatchAsync, _cancellationToken);
+                            }
+                            else if (stage is IStage syncStage)
+                            {
+                                await Task.Run(() => syncStage.Execute(_context, () => Task.Run(DispatchAsync, _cancellationToken)), _cancellationToken);
+                            }
                         }
                         finally
                         {

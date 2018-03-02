@@ -18,6 +18,18 @@ namespace Irdaf.Messaging.Pipeline
         {
             builder
                 .RegisterAssemblyTypes(assemblies)
+                .AsClosedTypesOf(typeof(IQueryHandler<,>));
+
+            builder
+                .RegisterAssemblyTypes(assemblies)
+                .AsClosedTypesOf(typeof(ICommandHandler<>));
+
+            builder
+                .RegisterAssemblyTypes(assemblies)
+                .AsClosedTypesOf(typeof(IEventHandler<>));
+
+            builder
+                .RegisterAssemblyTypes(assemblies)
                 .AsClosedTypesOf(typeof(IQueryHandlerAsync<,>));
 
             builder

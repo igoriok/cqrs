@@ -1,33 +1,25 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Irdaf.Messaging.Handlers;
 
 namespace Irdaf.Messaging.Pipeline.Stages
 {
-    public class InvokeHandlerStage : IStage
+    public class InvokeHandlerStage : IStage, IStageAsync
     {
-        private readonly IHandlerRegistry _handlerRegistry;
-
-        public InvokeHandlerStage(IHandlerRegistry handlerRegistry)
-        {
-            _handlerRegistry = handlerRegistry;
-        }
-
         public void Execute(IPipelineContext context, Action next)
         {
-            var executor = (IExecutor)context;
+            var handlers = context.Get<HandlerList>();
 
-            executor.Execute(_handlerRegistry);
+            context.Convention.Invoke(handlers, context);
 
             next();
         }
 
         public async Task ExecuteAsync(IPipelineContext context, Func<Task> next, CancellationToken cancellationToken)
         {
-            var executor = (IExecutor)context;
+            var handlers = context.Get<HandlerList>();
 
-            await executor.ExecuteAsync(_handlerRegistry, cancellationToken);
+            await context.Convention.InvokeAsync(handlers, context, cancellationToken);
 
             await next();
         }

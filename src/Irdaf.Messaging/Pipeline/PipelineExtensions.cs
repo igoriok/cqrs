@@ -1,19 +1,20 @@
-﻿using System;
-using Irdaf.Messaging.Pipeline.Stages;
-
-namespace Irdaf.Messaging.Pipeline
+﻿namespace Irdaf.Messaging.Pipeline
 {
     public static class PipelineExtensions
     {
-        public static PipelineBuilder UseDefaults(this PipelineBuilder builder)
+        public static void Set<T>(this IPipelineContext context, string key, T value)
         {
-            return builder;
+            context.Set(key, value);
         }
 
-        public static PipelineBuilder UseUnitOfWork<TUnitOfWork>(this PipelineBuilder builder, Func<IPipelineContext, TUnitOfWork> factory, Action<TUnitOfWork> commit, Action<TUnitOfWork> rollback)
-            where TUnitOfWork : class, IDisposable
+        public static void Set<T>(this IPipelineContext context, T value)
         {
-            return builder.Use(ctx => new UnitOfWorkStage<TUnitOfWork>(factory, commit, rollback));
+            context.Set(typeof(T).FullName, value);
+        }
+
+        public static void Remove<T>(this IPipelineContext context)
+        {
+            context.Remove(typeof(T).FullName);
         }
     }
 }

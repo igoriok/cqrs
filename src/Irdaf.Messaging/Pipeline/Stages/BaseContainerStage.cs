@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Irdaf.Messaging.Pipeline.Stages
 {
-    public abstract class BaseContainerStage<TContainer> : IStage
+    public abstract class BaseContainerStage<TContainer> : IStage, IStageAsync
         where TContainer : class, IDisposable
     {
         protected abstract TContainer CreateChildContainer(IPipelineContext context);
@@ -21,7 +21,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
                 }
                 finally
                 {
-                    context.Set<TContainer>(null);
+                    context.Remove<TContainer>();
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
                 }
                 finally
                 {
-                    context.Set<TContainer>(null);
+                    context.Remove<TContainer>();
                 }
             }
         }

@@ -5,7 +5,7 @@
     <Copyright>Copyright igoriok© 2016</Copyright>
     <AssemblyTitle>Irdaf.Messaging.Validation</AssemblyTitle>
     <Authors>igoriok</Authors>
-    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net46</TargetFrameworks>
     <AssemblyName>Irdaf.Messaging.Validation</AssemblyName>
     <PackageId>Irdaf.Messaging.Validation</PackageId>
     <PackageTags>messaging;cqrs;validation</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
     <RootNamespace>Irdaf.Messaging</RootNamespace>
-    <Version>0.1.5</Version>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,11 +22,15 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.1.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
 
 </Project>

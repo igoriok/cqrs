@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Irdaf.Messaging.Pipeline.Convensions;
 
 namespace Irdaf.Messaging.Pipeline
 {
     public abstract class PipelineContext : IPipelineContext, IDisposable
     {
-        public IMessage Message { get; }
+        public IPipelineContext Parent { get; }
 
-        public IMessageConvention Convention { get; }
+        public IMessage Message { get; }
 
         public IDictionary<string, object> Items { get; }
 
         public object Get(string key)
         {
-            Items.TryGetValue(key, out var value);
+            if (Items.TryGetValue(key, out var value))
+            {
+                return value;
+            }
 
-            return value;
+            return Parent?.Get(key);
         }
 
         public void Set(string key, object value)
@@ -35,10 +37,10 @@ namespace Irdaf.Messaging.Pipeline
             return Items.ContainsKey(key);
         }
 
-        protected PipelineContext(IMessage message, IMessageConvention convention)
+        protected PipelineContext(IMessage message, IPipelineContext parent = null)
         {
             Message = message;
-            Convention = convention;
+            Parent = parent;
 
             Items = new Dictionary<string, object>();
         }

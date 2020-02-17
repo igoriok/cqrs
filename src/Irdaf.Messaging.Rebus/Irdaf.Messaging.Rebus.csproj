@@ -5,7 +5,7 @@
     <Copyright>Copyright igoriok© 2015</Copyright>
     <AssemblyTitle>Irdaf.Messaging.Rebus</AssemblyTitle>
     <Authors>igoriok</Authors>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net46</TargetFrameworks>
     <AssemblyName>Irdaf.Messaging.Rebus</AssemblyName>
     <PackageId>Irdaf.Messaging.Rebus</PackageId>
     <PackageTags>messaging;cqrs;rebus</PackageTags>
@@ -13,7 +13,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
     <RootNamespace>Irdaf.Messaging</RootNamespace>
-    <Version>1.0.3</Version>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rebus" Version="4.2.1" />
+    <PackageReference Include="Rebus" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

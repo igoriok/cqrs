@@ -7,11 +7,13 @@ namespace Irdaf.Messaging.Pipeline.Stages
     public abstract class BaseContainerStage<TContainer> : IStage, IStageAsync
         where TContainer : class, IDisposable
     {
-        protected abstract TContainer CreateChildContainer(IPipelineContext context);
+        protected abstract TContainer CreateChildContainer(IPipelineContext context, TContainer parent = null);
 
         public void Execute(IPipelineContext context, Action next)
         {
-            using (var container = CreateChildContainer(context))
+            var parent = context.Get<TContainer>();
+
+            using (var container = CreateChildContainer(context, parent))
             {
                 context.Set(container);
 
@@ -28,7 +30,9 @@ namespace Irdaf.Messaging.Pipeline.Stages
 
         public async Task ExecuteAsync(IPipelineContext context, Func<Task> next, CancellationToken cancellationToken)
         {
-            using (var container = CreateChildContainer(context))
+            var parent = context.Get<TContainer>();
+
+            using (var container = CreateChildContainer(context, parent))
             {
                 context.Set(container);
 

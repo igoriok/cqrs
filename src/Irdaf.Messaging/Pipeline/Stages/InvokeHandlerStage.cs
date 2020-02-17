@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Irdaf.Messaging.Pipeline.Convensions;
 
 namespace Irdaf.Messaging.Pipeline.Stages
 {
@@ -9,8 +10,9 @@ namespace Irdaf.Messaging.Pipeline.Stages
         public void Execute(IPipelineContext context, Action next)
         {
             var handlers = context.Get<HandlerList>();
+            var convention = context.Get<IMessageConvention>();
 
-            context.Convention.Invoke(handlers, context);
+            convention.Invoke(handlers, context);
 
             next();
         }
@@ -18,8 +20,9 @@ namespace Irdaf.Messaging.Pipeline.Stages
         public async Task ExecuteAsync(IPipelineContext context, Func<Task> next, CancellationToken cancellationToken)
         {
             var handlers = context.Get<HandlerList>();
+            var convention = context.Get<IMessageConvention>();
 
-            await context.Convention.InvokeAsync(handlers, context, cancellationToken);
+            await convention.InvokeAsync(handlers, context, cancellationToken);
 
             await next();
         }

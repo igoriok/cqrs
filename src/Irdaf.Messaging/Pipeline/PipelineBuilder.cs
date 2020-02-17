@@ -26,6 +26,11 @@ namespace Irdaf.Messaging.Pipeline
             return this;
         }
 
+        public PipelineBuilder Use(object stage)
+        {
+            return Use(ctx => stage);
+        }
+
         public PipelineBuilder Use<TStage>()
             where TStage : new()
         {

@@ -29,8 +29,8 @@ namespace Irdaf.Messaging.Pipeline
             }
         }
 
-        public QueryContext(IQuery<TResult> query)
-            : base(query, (IMessageConvention)Activator.CreateInstance(typeof(QueryConvention<,>).MakeGenericType(query.GetType(), typeof(TResult))))
+        public QueryContext(IQuery<TResult> query, IPipelineContext parent = null)
+            : base(query, parent)
         {
         }
     }

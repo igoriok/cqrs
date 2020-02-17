@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,15 +8,17 @@ namespace Irdaf.Messaging.Pipeline.Stages
     public abstract class BaseUnitOfWorkStage<TUnitOfWork> : IStage, IStageAsync
         where TUnitOfWork : class, IDisposable
     {
-        protected abstract TUnitOfWork Create(IPipelineContext context);
+        protected abstract TUnitOfWork Create(IPipelineContext context, TUnitOfWork parent = null);
 
         protected abstract void Commit(TUnitOfWork unitOfWork, IPipelineContext context);
 
-        protected abstract bool Rollback(TUnitOfWork unitOfWork, IPipelineContext context, Exception exception);
+        protected abstract void Rollback(TUnitOfWork unitOfWork, IPipelineContext context, ExceptionDispatchInfo exception);
 
         public virtual void Execute(IPipelineContext context, Action next)
         {
-            using (var uow = Create(context))
+            var parent = context.Get<TUnitOfWork>();
+
+            using (var uow = Create(context, parent))
             {
                 context.Set(uow);
 
@@ -27,10 +30,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
                 }
                 catch (Exception exception)
                 {
-                    if (Rollback(uow, context, exception))
-                    {
-                        throw;
-                    }
+                    Rollback(uow, context, ExceptionDispatchInfo.Capture(exception));
                 }
                 finally
                 {
@@ -41,7 +41,9 @@ namespace Irdaf.Messaging.Pipeline.Stages
 
         public virtual async Task ExecuteAsync(IPipelineContext context, Func<Task> next, CancellationToken cancellationToken)
         {
-            using (var uow = Create(context))
+            var parent = context.Get<TUnitOfWork>();
+
+            using (var uow = Create(context, parent))
             {
                 context.Set(uow);
 
@@ -53,10 +55,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
                 }
                 catch (Exception exception)
                 {
-                    if (Rollback(uow, context, exception))
-                    {
-                        throw;
-                    }
+                    Rollback(uow, context, ExceptionDispatchInfo.Capture(exception));
                 }
                 finally
                 {

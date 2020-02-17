@@ -17,31 +17,31 @@ namespace Irdaf.Messaging.Pipeline.Stages
 
         protected abstract bool IsAsync(IPipelineContext context);
 
-        protected virtual void Send(IPipelineContext context)
+        protected virtual void Send(IMessage message, IPipelineContext context)
         {
-            Bus.Advanced.SyncBus.Send(context.Message);
+            Bus.Advanced.SyncBus.Send(message);
         }
 
-        protected virtual Task SendAsync(IPipelineContext context)
+        protected virtual Task SendAsync(IMessage message, IPipelineContext context, CancellationToken cancellationToken)
         {
-            return Bus.Send(context.Message);
+            return Bus.Send(message);
         }
 
-        protected virtual void Publish(IPipelineContext context)
+        protected virtual void Publish(IMessage message, IPipelineContext context)
         {
-            Bus.Advanced.SyncBus.Publish(context.Message);
+            Bus.Advanced.SyncBus.Publish(message);
         }
 
-        protected virtual Task PublishAsync(IPipelineContext context)
+        protected virtual Task PublishAsync(IMessage message, IPipelineContext context, CancellationToken cancellationToken)
         {
-            return Bus.Publish(context.Message);
+            return Bus.Publish(message);
         }
 
-        protected virtual void Handle(global::Rebus.Pipeline.IMessageContext rebusContext, IPipelineContext pipelineContext)
+        protected virtual void Handle(IMessage message, global::Rebus.Pipeline.IMessageContext rebusContext, IPipelineContext pipelineContext)
         {
         }
 
-        protected virtual Task HandleAsync(global::Rebus.Pipeline.IMessageContext rebusContext, IPipelineContext pipelineContext)
+        protected virtual Task HandleAsync(IMessage message, global::Rebus.Pipeline.IMessageContext rebusContext, IPipelineContext pipelineContext, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
@@ -54,20 +54,20 @@ namespace Irdaf.Messaging.Pipeline.Stages
             {
                 if (context is EventContext)
                 {
-                    Publish(context);
+                    Publish(context.Message, context);
                 }
                 else
                 {
-                    Send(context);
+                    Send(context.Message, context);
                 }
             }
             else
             {
-                using (RebusContext.Assing(null))
+                using (RebusContext.Assign(null))
                 {
                     if (rebusContext != null)
                     {
-                        Handle(rebusContext, context);
+                        Handle(context.Message, rebusContext, context);
                     }
 
                     next();
@@ -83,20 +83,20 @@ namespace Irdaf.Messaging.Pipeline.Stages
             {
                 if (context is EventContext)
                 {
-                    await PublishAsync(context);
+                    await PublishAsync(context.Message, context, cancellationToken);
                 }
                 else
                 {
-                    await SendAsync(context);
+                    await SendAsync(context.Message, context, cancellationToken);
                 }
             }
             else
             {
-                using (RebusContext.Assing(null))
+                using (RebusContext.Assign(null))
                 {
                     if (rebusContext != null)
                     {
-                        await HandleAsync(rebusContext, context);
+                        await HandleAsync(context.Message, rebusContext, context, cancellationToken);
                     }
 
                     await next();

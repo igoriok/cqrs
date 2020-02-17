@@ -17,7 +17,7 @@ namespace Irdaf.Messaging.Rebus
 
         public async Task Handle(ICommand message)
         {
-            using (RebusContext.Assing(global::Rebus.Pipeline.MessageContext.Current))
+            using (RebusContext.Assign(global::Rebus.Pipeline.MessageContext.Current))
             {
                 await _messageService.ExecuteAsync(message).ConfigureAwait(false);
             }
@@ -25,7 +25,7 @@ namespace Irdaf.Messaging.Rebus
 
         public async Task Handle(IEvent message)
         {
-            using (RebusContext.Assing(global::Rebus.Pipeline.MessageContext.Current))
+            using (RebusContext.Assign(global::Rebus.Pipeline.MessageContext.Current))
             {
                 await _messageService.PublishAsync(message).ConfigureAwait(false);
             }

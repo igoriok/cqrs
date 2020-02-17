@@ -6,7 +6,7 @@
     <AssemblyTitle>Irdaf.Messaging.Autofac</AssemblyTitle>
     <VersionPrefix>0.1.3</VersionPrefix>
     <Authors>igoriok</Authors>
-    <TargetFrameworks>netstandard1.3;netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net461</TargetFrameworks>
     <AssemblyName>Irdaf.Messaging.Autofac</AssemblyName>
     <PackageId>Irdaf.Messaging.Autofac</PackageId>
     <PackageTags>messaging;cqrs;autofac</PackageTags>
@@ -14,7 +14,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/igoriok/cqrs</RepositoryUrl>
     <RootNamespace>Irdaf.Messaging</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac" Version="5.1.2" />
   </ItemGroup>
 
 </Project>

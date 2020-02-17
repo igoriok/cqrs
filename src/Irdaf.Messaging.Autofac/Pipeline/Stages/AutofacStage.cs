@@ -11,9 +11,11 @@ namespace Irdaf.Messaging.Pipeline.Stages
             Scope = scope;
         }
 
-        protected override ILifetimeScope CreateChildContainer(IPipelineContext context)
+        protected override ILifetimeScope CreateChildContainer(IPipelineContext context, ILifetimeScope parent = null)
         {
-            return Scope.BeginLifetimeScope();
+            var scope = parent ?? Scope;
+
+            return scope.BeginLifetimeScope();
         }
     }
 }

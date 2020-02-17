@@ -22,7 +22,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
             Bus.Advanced.SyncBus.Defer(delay, message);
         }
 
-        protected virtual Task DeferAsync(TimeSpan delay, IMessage message, IPipelineContext context)
+        protected virtual Task DeferAsync(TimeSpan delay, IMessage message, IPipelineContext context, CancellationToken cancellationToken)
         {
             return Bus.Defer(delay, message);
         }
@@ -43,7 +43,7 @@ namespace Irdaf.Messaging.Pipeline.Stages
         {
             if (context.Message is TDeferMessage defer && RebusContext.Current == null)
             {
-                await DeferAsync(GetDelay(defer, context), GetMessage(defer, context), context);
+                await DeferAsync(GetDelay(defer, context), GetMessage(defer, context), context, cancellationToken);
             }
             else
             {

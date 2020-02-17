@@ -13,7 +13,7 @@ namespace Irdaf.Messaging.Rebus
             internal set => Context.Value = value;
         }
 
-        public static IDisposable Assing(global::Rebus.Pipeline.IMessageContext context)
+        public static IDisposable Assign(global::Rebus.Pipeline.IMessageContext context)
         {
             return new Disposable(context);
         }

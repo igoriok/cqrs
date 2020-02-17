@@ -1,7 +1,4 @@
-﻿using System;
-using Irdaf.Messaging.Pipeline.Convensions;
-
-namespace Irdaf.Messaging.Pipeline
+﻿namespace Irdaf.Messaging.Pipeline
 {
     public sealed class CommandContext : PipelineContext
     {
@@ -10,8 +7,8 @@ namespace Irdaf.Messaging.Pipeline
             get { return (ICommand)Message; }
         }
 
-        public CommandContext(ICommand command)
-            : base(command, (IMessageConvention)Activator.CreateInstance(typeof(CommandConvention<>).MakeGenericType(command.GetType())))
+        public CommandContext(ICommand command, IPipelineContext parent = null)
+            : base(command, parent)
         {
         }
     }

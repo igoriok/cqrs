@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Irdaf.Messaging.Handlers;
+using Irdaf.Messaging.Pipeline.Convensions;
 
 namespace Irdaf.Messaging.Pipeline.Stages
 {
@@ -42,14 +43,14 @@ namespace Irdaf.Messaging.Pipeline.Stages
 
         private IEnumerable<object> GetHandlers(IPipelineContext context)
         {
-            var handlerType = context.Convention.GetHandlerType();
+            var handlerType = context.Get<IMessageConvention>().GetHandlerType();
 
             return _handlerRegistry.GetHandlers(handlerType, context).OfType<object>();
         }
 
         private IEnumerable<object> GetHandlersAsync(IPipelineContext context)
         {
-            var handlerType = context.Convention.GetHandlerAsyncType();
+            var handlerType = context.Get<IMessageConvention>().GetHandlerAsyncType();
 
             return _handlerRegistry.GetHandlers(handlerType, context).OfType<object>();
         }

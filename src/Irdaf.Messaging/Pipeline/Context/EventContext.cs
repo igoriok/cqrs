@@ -1,6 +1,3 @@
-using System;
-using Irdaf.Messaging.Pipeline.Convensions;
-
 namespace Irdaf.Messaging.Pipeline
 {
     public sealed class EventContext : PipelineContext
@@ -10,8 +7,8 @@ namespace Irdaf.Messaging.Pipeline
             get { return (IEvent)Message; }
         }
 
-        public EventContext(IEvent @event)
-            : base(@event, (IMessageConvention)Activator.CreateInstance(typeof(EventConvention<>).MakeGenericType(@event.GetType())))
+        public EventContext(IEvent @event, IPipelineContext parent = null)
+            : base(@event, parent)
         {
         }
     }
